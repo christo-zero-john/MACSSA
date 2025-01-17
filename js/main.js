@@ -13,8 +13,10 @@
 
   // Initiate the wowjs
   new WOW({
-    mobile: true, // Enable animations on mobile devices
-    live: true, // Enable dynamic content support
+    mobile: true,
+    live: true,
+    offset: 0, // Start animation when element enters viewport
+    resetAnimation: true, // Reset animation on each scroll
   }).init();
 
   // Back to top button
@@ -104,36 +106,5 @@
     $("#portfolio-filter li").removeClass("filter-active");
     $(this).addClass("filter-active");
     portfolioIsotope.isotope({ filter: $(this).data("filter") });
-  });
-
-  // Create intersection observer to handle animations
-  const animateOnScroll = () => {
-    const elements = document.querySelectorAll('.wow');
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        // Get animation name from data attribute or default to fadeIn
-        const animation = entry.target.dataset.wowAnimation || 'fadeIn';
-        
-        if (entry.isIntersecting) {
-          // Add animation classes when element is visible
-          entry.target.classList.add('animated', animation);
-        } else {
-          // Remove animation classes when element is not visible
-          entry.target.classList.remove('animated', animation);
-        }
-      });
-    }, {
-      threshold: 0.1, // Trigger when at least 10% of element is visible
-      rootMargin: '50px' // Start animation 50px before element enters viewport
-    });
-
-    // Observe all elements with 'wow' class
-    elements.forEach(element => observer.observe(element));
-  };
-
-  // Initialize animations
-  document.addEventListener('DOMContentLoaded', () => {
-    animateOnScroll();
   });
 })(jQuery);
